@@ -6,7 +6,7 @@ import { listTodos } from './graphql/queries'
 
 import awsExports from "./aws-exports";
 
-import { withAuthenticator, Button, Heading } from '@aws-amplify/ui-react';
+import { withAuthenticator, Button, Heading, Text, TextField, View } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 
 Amplify.configure(awsExports);
@@ -46,32 +46,32 @@ const App = ({ signOut, user }) => {
   }
 
   return (
-    <div style={styles.container}>
+    <View style={styles.container}>
       <Heading level={1}>Hello {user.username}</Heading>
-      <Button onClick={signOut}>Sign out</Button>
-      <h2>Amplify Todos</h2>
-      <input
+      <Button style={styles.button} onClick={signOut}>Sign out</Button>
+      <Heading level={2}>Amplify Todos</Heading>
+      <TextField
+        placeholder="Name"
         onChange={event => setInput('name', event.target.value)}
         style={styles.input}
-        value={formState.name}
-        placeholder="Name"
+        defaultValue={formState.name}
       />
-      <input
+      <TextField
+        placeholder="Description"
         onChange={event => setInput('description', event.target.value)}
         style={styles.input}
-        value={formState.description}
-        placeholder="Description"
+        defaultValue={formState.description}
       />
-      <button style={styles.button} onClick={addTodo}>Create Todo</button>
+      <Button style={styles.button} onClick={addTodo}>Create Todo</Button>
       {
         todos.map((todo, index) => (
-          <div key={todo.id ? todo.id : index} style={styles.todo}>
-            <p style={styles.todoName}>{todo.name}</p>
-            <p style={styles.todoDescription}>{todo.description}</p>
-          </div>
+          <View key={todo.id ? todo.id : index} style={styles.todo}>
+            <Text style={styles.todoName}>{todo.name}</Text>
+            <Text style={styles.todoDescription}>{todo.description}</Text>
+          </View>
         ))
       }
-    </div>
+    </View>
   )
 }
 
